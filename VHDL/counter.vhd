@@ -24,16 +24,19 @@ entity counter is
 
 	port
 		(
-			sel					:   in  std_logic_vector(9 downto 0);
+			sel					:   in  std_logic_vector(4 downto 0);
 			input				:	in	std_logic;
-			output				:	out	std_logic_vector(31 downto 0);
+			output				:	out	std_logic_vector(63 downto 0);
 		);
 
 end entity counter;
 
 architecture counter_arch of counter is
 
-signal count : integer := '0';
+-- For a 5 GHz clock, which is 100x faster than the onboard clock (50 MHz) it would take just over a month to reach the max value of count. 
+-- This should be more than sufficient to handle any increased frequency we may see due to the RO. 
+
+signal count : unsigned(63 downto 0) := (others => '0');
 
 begin
 
@@ -56,8 +59,8 @@ begin
 			
 		end if;
 		
-		-- This line needs to convert count from an integer to an std_logic_vector. s 
-		output <= std_logic_vector(to_unsigned(count, output'length));
+		-- This line needs to convert count from an integer to an std_logic_vector. 
+		output <= std_logic_vector(count);
 		
 	end process;
 
