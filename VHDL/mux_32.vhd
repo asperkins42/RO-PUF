@@ -4,7 +4,7 @@
 -- RESEARCH SUPERVISOR:  Dr. Syed Rafay Hasan
 --
 -- DATE CREATED:   May 23, 2024
--- LAST MODIFIED:  May 23, 2024
+-- LAST MODIFIED:  May 24, 2024
 --
 -- Description:
 -- Takes in 32 std_logic bits and uses a 5-bit select line to pass 

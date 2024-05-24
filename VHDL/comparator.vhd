@@ -4,14 +4,13 @@
 --
 -- RESEARCH SUPERVISOR:  Dr. Syed Rafay Hasan
 --
--- DATE CREATED:   May 23, 2024
--- LAST MODIFIED:  May 23, 2024
+-- DATE CREATED:   May 24, 2024
+-- LAST MODIFIED:  May 24, 2024
 --
 -- Description:
--- The counter will increment by one each time a rising edge is detected on the input pin. 
--- This integer will then be cast to a std_logic_vector and passed to the comparator. 
+-- This component takes in two std_logic_vectors that are 64 bits long. These vectors are then cast to unsigned integers
+-- where they can be compared to see what the values are. If the value of countA is greater than the value of countB, a '1' is output. 
 --
--- Every time the sel line changes, the counter will be reset.
 ---------------------------------------------------------------------
 
 library ieee;
