@@ -15,33 +15,33 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_signed.all;
-use ieee.std_logic_arith.all;
+-- use ieee.std_logic_arith.all;
 use ieee.numeric_std.all;
 
-entity top is
+entity top_demux is
 
 	port
 		(
 			enable				:   in  std_logic;
 			switch				:	in	std_logic_vector(9 downto 0);
-			output				:	out	std_logic;
+			output				:	out	std_logic
 		);
 
-end entity top;
+end entity top_demux;
 
-architecture top_arch of top is
+architecture top_demux_arch of top_demux is
 
 signal counter_A_to_comparator, counter_B_to_comparator	: std_logic_vector(63 downto 0);
 signal RO_to_MUX 										: std_logic_vector(31 downto 0);
 signal MUX_to_counter_A, MUX_to_counter_B 				: std_logic;
-signal enable											: std_logic := '1';
+signal enable_in											: std_logic := '1';
 signal demux_to_RO_A									: std_logic_vector(31 downto 0);
 
 
 begin
 
 -- Demultiplexor Declaration
-DMUXA: entity work.demux_32 port map(switch(9 downto 0), enable, demux_to_RO_A(31 downto 0);
+DMUXA: entity work.demux_32 port map(switch(9 downto 0), enable, demux_to_RO_A(31 downto 0));
 
 
 -- Ring Oscillator Declarations : I could have used generate, but I was more comfortable doing this. May come back and fix it later.
@@ -90,4 +90,4 @@ CNTB : entity work.counter port map (switch(4 downto 0), MUX_to_counter_B, count
 COMP : entity work.comparator port map(counter_A_to_comparator, counter_B_to_comparator, output);
 	
 	
-end architecture top_arch;
+end architecture top_demux_arch;

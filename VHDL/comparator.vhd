@@ -16,7 +16,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_signed.all;
-use ieee.std_logic_arith.all;
+-- use ieee.std_logic_arith.all;
 use ieee.numeric_std.all;
 
 entity comparator is
@@ -24,7 +24,7 @@ entity comparator is
 	port
 		(
 			input_A, input_B	:   in  std_logic_vector(63 downto 0);
-			output				:	out	std_logic;
+			output				:	out	std_logic
 		);
 
 end entity comparator;
@@ -39,8 +39,8 @@ begin
 	process(input_A, input_B)
 	begin
 	
-		countA <= unsigned(inputA);
-		countB <= unsigned(inputB);
+		countA <= unsigned(input_A);
+		countB <= unsigned(input_B);
 	
 		if (countA > countB) then	
 		
@@ -50,7 +50,7 @@ begin
 	
 			output <= '0';
 		
-		end if
+		end if;
 	
 		
 	end process;

@@ -15,7 +15,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_signed.all;
-use ieee.std_logic_arith.all;
+-- use ieee.std_logic_arith.all;
 use ieee.numeric_std.all;
 
 entity top is
@@ -25,6 +25,8 @@ entity top is
 			enable				:   in  std_logic;
 			switch				:	in	std_logic_vector(9 downto 0);
 			output				:	out	std_logic;
+			sevSeg5, sevSeg4, sevSeg3, sevSeg2					: out std_logic_vector(7 downto 0)
+
 		);
 
 end entity top;
@@ -34,10 +36,16 @@ architecture top_arch of top is
 signal counter_A_to_comparator, counter_B_to_comparator	: std_logic_vector(63 downto 0);
 signal RO_to_MUX 										: std_logic_vector(31 downto 0);
 signal MUX_to_counter_A, MUX_to_counter_B 				: std_logic;
+signal dummy														: std_logic_vector(2 downto 0);
+signal to7seg5, to7seg3											: std_logic_vector(3 downto 0);
 
 
 begin
 
+to7seg5 <= "000" & switch(9);
+to7seg3 <= "000" & switch(4);
+
+	
 -- Ring Oscillator Declarations : I could have used generate, but I was more comfortable doing this. May come back and fix it later.
 RO0 : entity work.ring_oscillator port map(enable, RO_to_MUX(0));
 RO1 : entity work.ring_oscillator port map(enable, RO_to_MUX(1));	
@@ -82,6 +90,13 @@ CNTB : entity work.counter port map (switch(4 downto 0), MUX_to_counter_B, count
 
 -- Comparator Declaration	
 COMP : entity work.comparator port map(counter_A_to_comparator, counter_B_to_comparator, output);
-	
+
+-- SEVEN SEGMENT CODE
+SS5  : entity work.BinaryTo7Seg port map(to7seg5, sevSeg5);
+SS4  : entity work.BinaryTo7Seg port map(switch(8 downto 5), sevSeg4);
+SS3  : entity work.BinaryTo7Seg port map(to7seg3, sevSeg3);
+SS2  : entity work.BinaryTo7Seg port map(switch(3 downto 0), sevSeg2);
+
+	 
 	
 end architecture top_arch;
