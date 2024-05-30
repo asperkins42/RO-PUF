@@ -22,11 +22,11 @@ entity top is
 
 	port
 		(
-			enable				:   in  std_logic;
-			switch				:	in	std_logic_vector(9 downto 0);
-			output				:	out	std_logic;
+			enable														: in  std_logic;
+			switch														: in	std_logic_vector(9 downto 0);
+			reset															: in std_logic;
+			output														: out	std_logic;
 			sevSeg5, sevSeg4, sevSeg3, sevSeg2					: out std_logic_vector(7 downto 0)
-
 		);
 
 end entity top;
@@ -34,11 +34,10 @@ end entity top;
 architecture top_arch of top is
 
 signal counter_A_to_comparator, counter_B_to_comparator	: std_logic_vector(63 downto 0);
-signal RO_to_MUX 										: std_logic_vector(31 downto 0);
-signal MUX_to_counter_A, MUX_to_counter_B 				: std_logic;
-signal dummy														: std_logic_vector(2 downto 0);
-signal to7seg5, to7seg3											: std_logic_vector(3 downto 0);
-
+signal RO_to_MUX 														: std_logic_vector(31 downto 0);
+signal MUX_to_counter_A, MUX_to_counter_B 					: std_logic;
+signal dummy															: std_logic_vector(2 downto 0);
+signal to7seg5, to7seg3												: std_logic_vector(3 downto 0);
 
 begin
 
@@ -85,8 +84,8 @@ MUXA : entity work.mux_32 port map (switch(9 downto 5), RO_to_MUX(31 downto 0), 
 MUXB : entity work.mux_32 port map (switch(4 downto 0), RO_to_MUX(31 downto 0), MUX_to_counter_B);
 
 -- Counter Declarations
-CNTA : entity work.counter port map (switch(9 downto 5), MUX_to_counter_A, counter_A_to_comparator);
-CNTB : entity work.counter port map (switch(4 downto 0), MUX_to_counter_B, counter_B_to_comparator);
+CNTA : entity work.counter port map (switch(9 downto 5), reset, MUX_to_counter_A, counter_A_to_comparator);
+CNTB : entity work.counter port map (switch(4 downto 0), reset, MUX_to_counter_B, counter_B_to_comparator);
 
 -- Comparator Declaration	
 COMP : entity work.comparator port map(counter_A_to_comparator, counter_B_to_comparator, output);

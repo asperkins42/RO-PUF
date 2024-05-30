@@ -25,7 +25,8 @@ entity counter is
 	port
 		(
 			sel					:   in  std_logic_vector(4 downto 0);
-			input				:	in	std_logic;
+			reset					:   in std_logic;
+			input					:	in	std_logic;
 			output				:	out	std_logic_vector(63 downto 0)
 		);
 
@@ -39,9 +40,9 @@ architecture counter_arch of counter is
 signal count : unsigned(63 downto 0) := (others => '0');
 
 begin
-    process(input, sel)
+    process(input, reset)
     begin
-        if sel /= "00000" then  -- Assuming a specific value to reset
+        if reset = '1' then  -- Assuming a specific value to reset
             count <= (others => '0');  -- Properly constrained
         elsif rising_edge(input) then
             count <= count + 1;

@@ -23,6 +23,7 @@ entity top_demux is
 	port
 		(
 			enable				:   in  std_logic;
+			reset					: in std_logic;
 			switch				:	in	std_logic_vector(9 downto 0);
 			output				:	out	std_logic
 		);
@@ -83,8 +84,8 @@ MUXA : entity work.mux_32 port map (switch(9 downto 5), RO_to_MUX(31 downto 0), 
 MUXB : entity work.mux_32 port map (switch(4 downto 0), RO_to_MUX(31 downto 0), MUX_to_counter_B);
 
 -- Counter Declarations
-CNTA : entity work.counter port map (switch(9 downto 5), MUX_to_counter_A, counter_A_to_comparator);
-CNTB : entity work.counter port map (switch(4 downto 0), MUX_to_counter_B, counter_B_to_comparator);
+CNTA : entity work.counter port map (switch(9 downto 5), reset, MUX_to_counter_A, counter_A_to_comparator);
+CNTB : entity work.counter port map (switch(4 downto 0), reset, MUX_to_counter_B, counter_B_to_comparator);
 
 -- Comparator Declaration	
 COMP : entity work.comparator port map(counter_A_to_comparator, counter_B_to_comparator, output);
