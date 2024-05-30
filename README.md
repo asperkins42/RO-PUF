@@ -1,2 +1,1 @@
-# RO-PUF
-A ring oscillator based physical unclonable function to be implemented on an Altera DE10Lite FPGA. 
+# This is where the VHDL files for the project will be contained. 
