@@ -10,6 +10,7 @@ entity BinaryTo7Seg is
 		
 		input : in std_logic_vector(3 downto 0);
 		output : out std_logic_vector(0 to 7));
+		
 end BinaryTo7Seg;
 
 architecture Behavioral of BinaryTo7Seg is

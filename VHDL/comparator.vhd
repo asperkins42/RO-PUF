@@ -16,14 +16,13 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_signed.all;
--- use ieee.std_logic_arith.all;
 use ieee.numeric_std.all;
 
 entity comparator is
 
 	port
 		(
-			input_A, input_B	:   in  std_logic_vector(63 downto 0);
+			input_A, input_B	:   in  std_logic_vector(31 downto 0);
 			output				:	out	std_logic
 		);
 
@@ -31,8 +30,8 @@ end entity comparator;
 
 architecture comparator_arch of comparator is
 
-signal countA : unsigned(63 downto 0);
-signal countB : unsigned(63 downto 0);
+signal countA : unsigned(31 downto 0);
+signal countB : unsigned(31 downto 0);
 
 begin
 
@@ -44,11 +43,11 @@ begin
 	
 		if (countA > countB) then	
 		
-			output <= '1';
+			output <= '0';
 		
 		else
 	
-			output <= '0';
+			output <= '1';
 		
 		end if;
 	

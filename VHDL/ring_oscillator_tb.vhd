@@ -6,15 +6,27 @@ end entity ring_oscillator_tb;
 
 architecture tb of ring_oscillator_tb is
 
-	signal run		:	std_logic;
+	signal run		:	std_logic := '0';
 	signal output	:	std_logic;
+	signal oscillate: std_logic_vector(30 downto 0) := (others => '0');
 
 begin
 
-DUT : entity work.ring_oscillator port map (run, output);
+--DUT : entity work.fromWeb port map (run, output);
 
-run <= '1' after 1 ns;
-run <= '0' after 1 ns;
+	process
+	begin
+	
+		wait for 100 ns;
 
-
+		run <= '1';
+	
+		wait for 100 ns;
+		
+		run <= '0';
+		
+		wait;
+		
+	end process;
+		
 end architecture tb;

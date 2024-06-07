@@ -1,52 +1,70 @@
-
----------------------------------------------------------------------
--- AUTHOR:  Abraham Perkins
+---- AS OF 5/31 THIS COUNTER VERIFIABLY WORKS. COPY AND PASTE INTO A NEW FILE TO MAKE 16-BIT COUNTER PLEASE
 --
--- RESEARCH SUPERVISOR:  Dr. Syed Rafay Hasan
+--library ieee;
+--use ieee.std_logic_1164.all;
+--use ieee.std_logic_unsigned.all;
+--use ieee.numeric_std.all;
 --
--- DATE CREATED:   May 23, 2024
--- LAST MODIFIED:  May 23, 2024
+--entity counter is
 --
--- Description:
--- The counter will increment by one each time a rising edge is detected on the input pin. 
--- This integer will then be cast to a std_logic_vector and passed to the comparator. 
+--	port
+--		(
+--			clk					:	in	std_logic;
+--			output				:	buffer std_logic_vector(7 downto 0);
+--			sendIt				:  buffer std_logic
+--		);
 --
--- Every time the sel line changes, the counter will be reset.
----------------------------------------------------------------------
+--end entity counter;
+--
+--architecture counter_arch of counter is
+--
+--begin
+--    process(clk)
+--    begin
+--        if rising_edge(clk) then
+--		  
+--				if output = "11111111" then
+--				
+--					output <= "00000000";
+--					sendIt <= '1';
+--					
+--				end if;
+--				
+--            output <= output + 1;
+--				sendIt <= '0';
+--				
+--        end if;	 
+--	 end process;
+--end architecture counter_arch;
 
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.std_logic_signed.all;
--- use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
 use ieee.numeric_std.all;
 
 entity counter is
-
-	port
-		(
-			sel					:   in  std_logic_vector(4 downto 0);
-			reset					:   in std_logic;
-			input					:	in	std_logic;
-			output				:	out	std_logic_vector(63 downto 0)
-		);
-
+    port (
+        clk     : in  std_logic;
+        output  : buffer std_logic_vector(7 downto 0);
+        sendIt  : buffer std_logic
+    );
 end entity counter;
 
 architecture counter_arch of counter is
-
--- For a 5 GHz clock, which is 100x faster than the onboard clock (50 MHz) it would take just over a month to reach the max value of count. 
--- This should be more than sufficient to handle any increased frequency we may see due to the RO. 
-
-signal count : unsigned(63 downto 0) := (others => '0');
-
+    signal count_reg : std_logic_vector(7 downto 0) := (others => '0'); -- Initialize count
 begin
-    process(input, reset)
+    process(clk)
     begin
-        if reset = '1' then  -- Assuming a specific value to reset
-            count <= (others => '0');  -- Properly constrained
-        elsif rising_edge(input) then
-            count <= count + 1;
+        if rising_edge(clk) then
+            if count_reg = "11111111" then
+                count_reg <= "00000000";
+                sendIt <= '1';
+            else
+                count_reg <= count_reg + 1;
+                sendIt <= '0';
+            end if;
         end if;
     end process;
 
+    output <= count_reg;
 end architecture counter_arch;
