@@ -3,6 +3,9 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 use ieee.numeric_std.all;
 
+LIBRARY altera;
+USE altera.altera_syn_attributes.all;
+
 entity RO_1 is
 
 port(

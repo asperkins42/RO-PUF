@@ -35,7 +35,11 @@ signal countB : unsigned(31 downto 0);
 
 begin
 
-	process(input_A, input_B)
+	
+		
+
+
+	process(input_A, input_B, countA, countB)
 	begin
 	
 		countA <= unsigned(input_A);
