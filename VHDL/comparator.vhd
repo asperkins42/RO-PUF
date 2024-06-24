@@ -33,13 +33,10 @@ architecture comparator_arch of comparator is
 signal countA : unsigned(31 downto 0);
 signal countB : unsigned(31 downto 0);
 
+
 begin
 
-	
-		
-
-
-	process(input_A, input_B, countA, countB)
+	process(input_A, input_B)
 	begin
 	
 		countA <= unsigned(input_A);

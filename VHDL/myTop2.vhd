@@ -6,12 +6,12 @@ use ieee.numeric_std.all;
 entity myTop2 is
 
 port(
-
+	reset  : in std_logic;
 	enable : in std_logic;
 	choice : in std_logic_vector(8 downto 0);
 	hex0, hex1, hex4, hex5 : buffer std_logic_vector(7 downto 0);
-	hex3, hex2	: buffer std_logic_vector(7 downto 0) := (others => '0');
-	light	: out std_logic
+	hex3, hex2	: buffer std_logic_vector(7 downto 0) := (others => '1');
+	light	: buffer std_logic
 	
 );
 
@@ -28,11 +28,7 @@ signal MUX_A_out, MUX_B_out		: std_logic;
 
 signal countA_out, countB_out	: std_logic_vector(31 downto 0);
 
-signal out1, out2			: std_logic_vector(4 downto 0);
-
 begin
---DECLARE choose32 file
-pick	: entity work.choose32 port map(choice, out1, out2);
 
 --DECLARE 32 RING OSCILLATORS
 RO1	: entity work.RO_1 port map(enable, RO_to_MUX(0));
@@ -68,15 +64,15 @@ RO30	: entity work.RO_1 port map(enable, RO_to_MUX(29));
 RO31	: entity work.RO_1 port map(enable, RO_to_MUX(30));
 RO32	: entity work.RO_1 port map(enable, RO_to_MUX(31));
 
--- CHOOSE: entity work.choose32 port map(choice, MUX_A_in, MUX_B_in);
+CHOOSE: entity work.choose32 port map(choice, MUX_A_in, MUX_B_in);
 
 --DECLARE BOTH 32_to_1 MUXES
-MUXA	: entity work.mux_32 port map(out1, RO_to_MUX, MUX_A_out);
-MUXB	: entity work.mux_32 port map(out2, RO_to_MUX, MUX_B_out);
+MUXA	: entity work.mux_32 port map(MUX_A_in, RO_to_MUX, MUX_A_out);
+MUXB	: entity work.mux_32 port map(MUX_B_in, RO_to_MUX, MUX_B_out);
 
 --DECLARE 32-BIT COUNTERS
-COUNTA: entity work.counter32 port map(choice, MUX_A_out, countA_out);
-COUNTB: entity work.counter32 port map(choice, MUX_B_out, countB_out);
+COUNTA: entity work.counter32_B port map(reset, MUX_A_out, countA_out);
+COUNTB: entity work.counter32_B port map(reset, MUX_B_out, countB_out);
 
 --DECLARE 32-BIT COMPARATOR
 COMP	: entity work.comparator port map(countA_out, countB_out, light);
