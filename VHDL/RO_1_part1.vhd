@@ -9,7 +9,8 @@ USE altera.altera_syn_attributes.all;
 entity RO_1_part1 is
     port(
         enable : in std_logic;
-        w_out : out std_logic_vector (15 downto 0)
+		  w_in	: in std_logic;
+        w_out  : out std_logic
     );
 end RO_1_part1;
 
@@ -23,7 +24,7 @@ architecture structural of RO_1_part1 is
 
 
 begin
-    DUT0  : entity work.webAnd2 port map(enable, w(14), w(0));
+    DUT0  : entity work.webAnd2 port map(enable, w_in, w(0));
     DUT1  : entity work.webNot port map(w(0), w(1));
     DUT2  : entity work.webNot port map(w(1), w(2));
     DUT3  : entity work.webNot port map(w(2), w(3));
@@ -39,5 +40,5 @@ begin
     DUT13 : entity work.webNot port map(w(12), w(13));
     DUT14 : entity work.webNot port map(w(13), w(14));
     DUT15 : entity work.webNot port map(w(14), w(15));
-    w_out <= w;
+    w_out <= w(15);
 end structural;

@@ -9,15 +9,16 @@ USE altera.altera_syn_attributes.all;
 entity RO_1b is
     port(
         enable : in std_logic;
-        output : out std_logic
+        output : buffer std_logic
     );
 end RO_1b;
 
 architecture structural of RO_1b is
-    signal w_intermediate : std_logic_vector (15 downto 0);
+    signal w_intermediate : std_logic;
 begin
     PART1 : entity work.RO_1_part1 port map(
-        enable => enable,
+		  enable => enable,
+		  w_in => output,
         w_out => w_intermediate
     );
 
