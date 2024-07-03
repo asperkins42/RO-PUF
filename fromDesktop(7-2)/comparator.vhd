@@ -22,22 +22,22 @@ entity comparator is
 
 	port
 		(
-			input_A, input_B	:   in  std_logic_vector(31 downto 0);
-			output				:	buffer	std_logic
+			input_A, input_B	:  in  std_logic_vector(7 downto 0);
+			output				:	buffer std_logic
 		);
 
 end entity comparator;
 
 architecture comparator_arch of comparator is
 
-signal countA : unsigned(31 downto 0);
-signal countB : unsigned(31 downto 0);
-signal desired : unsigned(31 downto 0) := "10100110101100011001001101100010";
+signal countA : unsigned(7 downto 0);
+signal countB : unsigned(7 downto 0);
+signal desired : unsigned(7 downto 0) := "10100110";
 
 
 begin
 
-	process(input_A, input_B)
+	process(input_A)
 	begin
 	
 		countA <= unsigned(input_A);

@@ -84,7 +84,7 @@ COUNTA: entity work.counter32_C port map(reset, MUX_A_out, countA_out);
 COUNTB: entity work.counter32_C port map(reset, MUX_B_out, countB_out);
 
 --DECLARE 32-BIT COMPARATOR
-COMP	: entity work.comparator port map(countA_out, countB_out, light);
+COMP	: entity work.comparator port map(countA_out(31 downto 24), countB_out(31 downto 24), light);
 
 --MAP 8 MSB OF COUNTER OUTPUT TO SEVEN SEGMENTS
 SEV0	: entity work.BinaryTo7Seg port map(countA_out(27 downto 24), hex0(7 downto 0));
